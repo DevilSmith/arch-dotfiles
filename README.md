@@ -9,3 +9,7 @@ My arch-dotfiles
 5. brightnessctl
 7. nm (NetworkManager)
 8. alacritty
+
+#### Installing fonts:
+
+Copy fonts folder from repository to $HOME/.local/share/fonts/
