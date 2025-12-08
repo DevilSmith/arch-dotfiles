@@ -13,3 +13,8 @@ My arch-dotfiles
 #### Installing fonts:
 
 Copy fonts folder from repository to $HOME/.local/share/fonts/
+
+#### Other daemons:
+1. power-profile-daemon (powerprofilesctl)
+2. NetworkManager
+3. Bluez
