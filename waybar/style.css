@@ -1,9 +1,11 @@
+
+
 * {
     /* `otf-font-awesome` and SpaceMono Nerd Font are required to be installed for icons */
-    font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: "0xProtoNerdFontMono-Regular", monospace;
     font-size: 15px;
     transition: background-color .3s ease-out;
-}
+    }
 
 window#waybar {
     background: rgba(26, 27, 38, 0);
@@ -88,7 +90,7 @@ window#waybar {
 
 #workspaces button.active {
   background: #cdd6f4;
-  color: #11111b; 
+  color: #11111b;
 }
 
 #workspaces button:hover {

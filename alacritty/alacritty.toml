@@ -1,0 +1,22 @@
+# Window settings
+[window]
+padding.x = 10
+padding.y = 10
+opacity = 0.9
+decorations = "buttonless"
+
+# Font settings
+[font]
+size = 10.0
+normal = { family = "0xProtoNerdFontMono", style = "Regular" }
+
+# Key bindings (example)
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
