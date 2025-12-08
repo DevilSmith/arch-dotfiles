@@ -8,3 +8,4 @@ My arch-dotfiles
 4. waybar
 5. brightnessctl
 7. nm (NetworkManager)
+8. alacritty
