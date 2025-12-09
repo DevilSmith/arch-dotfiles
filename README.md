@@ -9,6 +9,7 @@ My arch-dotfiles
 5. brightnessctl
 7. nm (NetworkManager)
 8. alacritty
+9. pavucontrol (for sound control)
 
 #### Installing fonts:
 
