@@ -3,16 +3,15 @@
 * {
     /* `otf-font-awesome` and SpaceMono Nerd Font are required to be installed for icons */
     font-family: "0xProtoNerdFontMono-Regular", monospace;
-    font-size: 15px;
+    font-size: 12px;
     transition: background-color .3s ease-out;
     }
 
 window#waybar {
+    font-family: "0xProtoNerdFontMono-Regular", monospace;
+    font-size: 12px;
     background: rgba(26, 27, 38, 0);
     color: #c0caf5;
-    font-family: 
-        SpaceMono Nerd Font,
-        feather;
     transition: background-color .5s;
 }
 
@@ -21,7 +20,7 @@ window#waybar {
 .modules-right
 {
     background: rgba(0, 0, 8, .7);
-    margin: 5px 10px;
+    margin: 6px 10px 0px 10px;
     padding: 0 5px;
     border-radius: 15px;
 }
