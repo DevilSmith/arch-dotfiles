@@ -10,6 +10,7 @@ My arch-dotfiles
 7. nm (NetworkManager)
 8. alacritty
 9. pavucontrol (for sound control)
+10. grim/slurp/swappy (screenshots)
 
 #### Installing fonts:
 
