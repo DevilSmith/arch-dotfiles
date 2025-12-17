@@ -9,8 +9,8 @@ My arch-dotfiles
 5. brightnessctl
 7. nm (NetworkManager)
 8. alacritty
-9. pavucontrol (for sound control)
 10. grim/slurp/swappy (screenshots)
+11. btop
 
 #### Installing fonts:
 
@@ -20,7 +20,8 @@ Copy fonts folder from repository to $HOME/.local/share/fonts/
 1. power-profile-daemon (powerprofilesctl)
 2. NetworkManager
 3. Bluez
-
+4. udisks2 (automount volumes)
+5. syncthing
 
 #### Other apps:
 1. kanshi (monitor manager)
@@ -28,3 +29,17 @@ Copy fonts folder from repository to $HOME/.local/share/fonts/
 3. cmus (tui music player)
 4. ranger (tui file manager)
 5. cava (sound analyzer)
+6. loupe (image viewer)
+7. nwg-look (GNOME theme editor)
+8. ueberzugpp (image preview for ranger)
+9. nmtui (TUI network manager editor)
+10. wl-clipboard (clipboard control)
+
+#### Sound:
+1. pipewire
+2. pipewire-pulse
+3. pipewire-alsa
+4. wireplumber
+5. pavucontrol
+6. libmad
+7. ffmpeg
