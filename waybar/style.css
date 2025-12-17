@@ -39,6 +39,7 @@ window#waybar {
 #temperature,
 #backlight,
 #network,
+#bluetooth,
 #pulseaudio,
 #wireplumber,
 #custom-media,
@@ -47,7 +48,6 @@ window#waybar {
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
-#language,
 #mpd {
     padding: 0 10px;
     border-radius: 15px;
@@ -61,6 +61,7 @@ window#waybar {
 #temperature:hover,
 #backlight:hover,
 #network:hover,
+#bluetooth:hover,
 #pulseaudio:hover,
 #wireplumber:hover,
 #custom-media:hover,
@@ -74,6 +75,9 @@ window#waybar {
     background: rgba(26, 27, 38, 0.9);
 }
 
+#language {
+  min-width: 50px;
+}
 
 #workspaces button {
   background: transparent;

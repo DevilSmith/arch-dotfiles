@@ -48,9 +48,18 @@
         "tooltip-format": "{ifname} via {gwaddr} 💻",
         "format-linked": "{ifname} (No IP) 🚫",
         "format-disconnected": "Disconnected ⚠",
-	"on-click": "nm-connection-editor"
-	 
+	      "on-click": "nm-connection-editor"
     },
+ "bluetooth": {
+	  "format": " {status}",
+	  "format-connected": " {device_alias}",
+	  "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+	  // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+	  "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+	  "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+	  "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+	  "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+  }, 
     "cpu": {
         "format": "  {usage}%",
         "tooltip": true
@@ -69,7 +78,9 @@
     "hyprland/language": {
        "format": "  {}",
        "format-en": "EN",
-       "format-ru": "RU"
+       "format-ru": "RU",
+        "on-click": "hyprctl switchxkblayout current next",
+       "keyboard-name": "at-translated-set-2-keyboard" 
     },
     "battery": {
         "states": {
@@ -90,5 +101,16 @@
         "format": "{:%H:%M | %e %B} ",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
+    },
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": "",
+        "power-saver": ""
+      }
     }
 }

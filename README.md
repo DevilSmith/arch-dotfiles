@@ -20,3 +20,11 @@ Copy fonts folder from repository to $HOME/.local/share/fonts/
 1. power-profile-daemon (powerprofilesctl)
 2. NetworkManager
 3. Bluez
+
+
+#### Other apps:
+1. kanshi (monitor manager)
+2. duf (disk space analyzer)
+3. cmus (tui music player)
+4. ranger (tui file manager)
+5. cava (sound analyzer)
