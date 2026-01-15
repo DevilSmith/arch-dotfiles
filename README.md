@@ -1,29 +1,34 @@
 # arch-dotfiles
+
 My arch-dotfiles
 
 #### Dependencies
+
 1. hyprland
 2. rofi
 3. hyprpaper
 4. waybar
 5. brightnessctl
-7. nm (NetworkManager)
-8. alacritty
-10. grim/slurp/swappy (screenshots)
-11. btop
+6. nm (NetworkManager)
+7. alacritty
+8. grim/slurp/swappy (screenshots)
+9. btop
+10. betterlockscreen
 
-#### Installing fonts:
+#### Installing fonts
 
 Copy fonts folder from repository to $HOME/.local/share/fonts/
 
-#### Other daemons:
+#### Other daemons
+
 1. power-profile-daemon (powerprofilesctl)
 2. NetworkManager
 3. Bluez
 4. udisks2 (automount volumes)
 5. syncthing
 
-#### Other apps:
+#### Other apps
+
 1. kanshi (monitor manager)
 2. duf (disk space analyzer)
 3. cmus (tui music player)
@@ -35,7 +40,8 @@ Copy fonts folder from repository to $HOME/.local/share/fonts/
 9. nmtui (TUI network manager editor)
 10. wl-clipboard (clipboard control)
 
-#### Sound:
+#### Sound
+
 1. pipewire
 2. pipewire-pulse
 3. pipewire-alsa
