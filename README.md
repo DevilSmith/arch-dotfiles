@@ -5,7 +5,7 @@ My arch-dotfiles
 #### Dependencies
 
 1. hyprland
-2. rofi
+2. hyprpanel (rofi is deprecated)
 3. hyprpaper
 4. waybar
 5. brightnessctl
