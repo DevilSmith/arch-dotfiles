@@ -2,12 +2,14 @@ import app from "ags/gtk4/app"
 import style from "./style.scss"
 import ClockWidget from "./widget/ClockWidget"
 import DesktopCalendar from "./widget/DesktopCalendar"
+import AnalogClock from "./widget/AnalogClock"
 
 app.start({
+css: style,
   main() {
     for (const monitor of app.get_monitors()) {
-      ClockWidget(monitor)
       DesktopCalendar(monitor)
+      AnalogClock(monitor)
     }
   },
 })

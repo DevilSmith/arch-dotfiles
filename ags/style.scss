@@ -2,6 +2,11 @@
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
+
+window {
+  background: transparent  
+}
+
 window.Bar {
   background: transparent;
   color: $fg-color;
@@ -18,3 +23,11 @@ window.Bar {
     margin: 2px;
   }
 }
+
+.analog-clock {
+  background-color: #2e2e2e;   // тёмно-серый
+  border-radius: 9999px;
+  padding: 10px;
+}
+
+
