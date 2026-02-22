@@ -25,9 +25,9 @@ window.Bar {
 }
 
 .analog-clock {
-  background-color: #2e2e2e;   // тёмно-серый
-  border-radius: 9999px;
-  padding: 10px;
+  background-color: rgba(36, 36, 56, 0.8);   // светло-голубой как в macOS
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
-
 

@@ -12,8 +12,8 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
       visible
       gdkmonitor={monitor}
       anchor={TOP | LEFT}
-      margin-top={10}
-      margin-left={20}
+      margin-top={13}
+      margin-left={13}
       application={app}
       focusable={false}
     >
