@@ -17,10 +17,22 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
     row_homogeneous: true,
   })
 
+  // Добавляем строку с названиями дней недели
+  const weekdaysBox = new Gtk.Box({
+    orientation: Gtk.Orientation.HORIZONTAL,
+    hexpand: true,
+  })
+
+  const weekdayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+  for (const day of weekdayNames) {
+    const lbl = new Gtk.Label({ label: day, halign: Gtk.Align.CENTER, hexpand: true })
+    lbl.add_css_class("calendar-weekday")
+    weekdaysBox.append(lbl)
+  }
+
   function updateCalendar() {
     // очистка grid
-    while (grid.get_first_child())
-      grid.remove(grid.get_first_child()!)
+    while (grid.get_first_child()) grid.remove(grid.get_first_child()!)
 
     const year = current.getFullYear()
     const month = current.getMonth()
@@ -37,14 +49,14 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
 
     for (let row = 0; row < 6; row++) {
       for (let col = 0; col < 7; col++) {
-
-        if (row === 0 && col < firstDay) {
+        // смещение первого дня месяца
+        const offset = (firstDay + 6) % 7 // чтобы пн=0
+        if (row === 0 && col < offset) {
           grid.attach(new Gtk.Label({ label: "" }), col, row, 1, 1)
           continue
         }
 
-        if (day > daysInMonth)
-          continue
+        if (day > daysInMonth) continue
 
         const label = new Gtk.Label({
           label: `${day}`,
@@ -68,9 +80,7 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
 
         box.append(label)
 
-        if (isToday)
-          box.add_css_class("calendar-today")
-
+        if (isToday) box.add_css_class("calendar-today")
         box.add_css_class("calendar-day")
 
         grid.attach(box, col, row, 1, 1)
@@ -95,18 +105,16 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
 
   updateCalendar()
 
- let lastDay = new Date().getDate()
+  let lastDay = new Date().getDate()
 
   GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 30, () => {
-  const now = new Date()
-
-  if (now.getDate() !== lastDay) {
-    lastDay = now.getDate()
-    updateCalendar()
-  }
-
-  return GLib.SOURCE_CONTINUE
-})
+    const now = new Date()
+    if (now.getDate() !== lastDay) {
+      lastDay = now.getDate()
+      updateCalendar()
+    }
+    return GLib.SOURCE_CONTINUE
+  })
 
   return (
     <window
@@ -121,12 +129,13 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
       application={app}
       focusable={false}
     >
-     <box class="desktop-calendar" orientation={Gtk.Orientation.VERTICAL}> 
+      <box class="desktop-calendar" orientation={Gtk.Orientation.VERTICAL}>
         <box class="calendar-header">
           {prevBtn}
           {monthLabel}
           {nextBtn}
         </box>
+        {weekdaysBox}      {/* <-- дни недели */}
         {grid}
       </box>
     </window>
