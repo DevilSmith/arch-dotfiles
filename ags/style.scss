@@ -31,3 +31,38 @@ window.Bar {
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
+.desktop-calendar {
+  background: rgba(30, 30, 35, 0.95);
+  border-radius: 24px;
+  padding: 20px;
+  color: white;
+  min-width: 280px;
+}
+
+.calendar-header {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.calendar-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+
+.calendar-day {
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.calendar-day:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.calendar-today {
+  background: #ff9500;
+  border-radius: 100px;
+}
+
