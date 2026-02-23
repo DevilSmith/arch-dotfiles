@@ -14,6 +14,8 @@ My arch-dotfiles
 8. grim/slurp/swappy (screenshots)
 9. btop
 10. betterlockscreen
+11. ags (widgets)
+12. hyprpicker
 
 #### Installing fonts
 
