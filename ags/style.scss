@@ -66,3 +66,28 @@ window.Bar {
   border-radius: 100px;
 }
 
+.vpn-container {
+  background: rgba(255,255,255, 1);
+  border-radius: 20px;
+  padding: 18px;
+  min-width: 240px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.vpn-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.vpn-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.vpn-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.vpn-item.active {
+  background: rgba(0,122,255,0.25);
+}
