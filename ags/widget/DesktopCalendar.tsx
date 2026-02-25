@@ -12,6 +12,8 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
     hexpand: true,
   })
 
+  monthLabel.add_css_class("calendar-month")
+
   const grid = new Gtk.Grid({
     column_homogeneous: true,
     row_homogeneous: true,
@@ -65,6 +67,8 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
           hexpand: true,
           vexpand: true,
         })
+
+        label.add_css_class("calendar-number")
 
         const isToday =
           day === today.getDate() &&

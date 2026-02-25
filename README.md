@@ -16,6 +16,7 @@ My arch-dotfiles
 10. betterlockscreen
 11. ags (widgets)
 12. hyprpicker
+13. hyprmon
 
 #### Installing fonts
 

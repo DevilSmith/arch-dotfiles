@@ -8,7 +8,7 @@ decorations = "buttonless"
 # Font settings
 [font]
 size = 10.0
-normal = { family = "0xProtoNerdFontMono", style = "Regular" }
+normal = { family = "JetBrains Mono", style = "Regular" }
 
 # Key bindings (example)
 [[keyboard.bindings]]

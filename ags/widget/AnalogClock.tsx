@@ -63,7 +63,7 @@ export default function AnalogClock(monitor: Gdk.Monitor) {
 
     // ---------- ЦИФРЫ ----------
     cr.setSourceRGB(0.1, 0.1, 0.1)
-    cr.selectFontFace("0xProto Nerd Font", 0, 0) // если нет — fallback
+    cr.selectFontFace("JetBrains Mono", 0, 0) // если нет — fallback
     cr.setFontSize(radius * 0.18)
 
     for (let i = 1; i <= 12; i++) {
