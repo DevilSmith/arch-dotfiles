@@ -68,27 +68,34 @@ window.Bar {
 }
 
 .vpn-container {
-  background: rgba(255,255,255, 1);
+  background-color: rgba(36, 36, 56, 0.8);   // как у analog-clock
   border-radius: 20px;
   padding: 18px;
   min-width: 240px;
-  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);   // тень как у analog-clock
+  color: white;                               // текст белый, как у календаря
+  font-family: "JetBrains Mono", "Inter", sans-serif;
+  border: none;                               // убираем рамку
 }
 
 .vpn-title {
   font-weight: 600;
   margin-bottom: 6px;
+  color: white;                               // заголовок белый
 }
 
 .vpn-item {
   padding: 10px 12px;
   border-radius: 12px;
+  background: rgba(255,255,255,0.05);        // очень лёгкий фон для элементов
+  transition: background 0.2s;
 }
 
 .vpn-item:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.1);         // подсветка при наведении
 }
 
 .vpn-item.active {
-  background: rgba(0,122,255,0.25);
+  background: rgba(0, 122, 255, 0.25);       // активный элемент с синим оттенком
+  color: white;                               // текст белый
 }

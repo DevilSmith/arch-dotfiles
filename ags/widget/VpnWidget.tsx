@@ -99,9 +99,9 @@ export default function VpnWidget(monitor: Gdk.Monitor) {
 
   return (
     <window
-      name="vpn-widget"
+      name={`vpn-widget-${monitor.get_connector()}`}
       namespace="ags-widget"
-      layer={Astal.Layer.BOTTOM}
+      layer={Astal.Layer.TOP}
       visible
       gdkmonitor={monitor}
       anchor={BOTTOM | RIGHT}
