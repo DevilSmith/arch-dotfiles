@@ -1,0 +1,145 @@
+$bg-panel: rgba(46, 52, 64, 0.85);   // Nord темный фон панели
+$bg-island:  rgba(30, 30, 35, 0.95);  // острова чуть ярче
+$accent: #88c0d0;                     // Nord accent
+$text: #ffffff;                        // белый текст по всей панели
+
+/* окно прозрачное, но текст и шрифты по умолчанию */
+window {
+  background: transparent;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  color: $text;
+}
+
+.arch-label {
+  font-family: "JetBrainsMono Nerd Font", "Nerd Font", monospace;
+  font-size: 18px;
+  line-height: 1;
+  padding-right: 6px;
+  padding-left: 1px;
+}
+
+window#bar {
+  background: $bg-panel;
+}
+
+.bar-root {
+  padding: 8px 12px 0px 12px;
+  min-height: 38px;
+}
+
+.island {
+  background: $bg-island;
+  border-radius: 6px;  /* почти прямоугольные */
+  padding: 4px 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  color: $text;
+}
+
+.center-island {
+  background: $bg-island;
+}
+
+.right-island {
+  margin-left: auto;  /* прижимаем к правому краю */
+}
+
+button {
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-family: "JetBrains Mono", monospace;
+  color: $text;
+}
+
+label {
+  font-family: "JetBrains Mono", monospace;
+  color: $text;
+}
+
+.workspace {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: transparent;
+  color: $text;
+}
+
+.workspace.active {
+  background: $accent;
+  color: $text;
+}
+
+/* Сохраняем твои существующие стили без изменений */
+.analog-clock {
+  background-color: rgba(30, 30, 35, 0.95);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.desktop-calendar {
+  background: rgba(30, 30, 35, 0.95);
+  border-radius: 24px;
+  padding: 20px;
+  color: white;
+  min-width: 280px;
+  font-family: "JetBrains Mono", "Inter", sans-serif;
+}
+
+.calendar-header {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.calendar-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+
+.calendar-day {
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.calendar-day:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.calendar-today {
+  background: #ff9500;
+  border-radius: 100px;
+}
+
+.vpn-container {
+  background-color: rgba(30, 30, 35, 0.95);
+  border-radius: 20px;
+  padding: 18px;
+  min-width: 240px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  color: white;
+  font-family: "JetBrains Mono", "Inter", sans-serif;
+  border: none;
+}
+
+.vpn-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: white;
+}
+
+.vpn-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+
+.vpn-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.vpn-item.active {
+  background: rgba(0, 122, 255, 0.25);
+  color: white;
+}

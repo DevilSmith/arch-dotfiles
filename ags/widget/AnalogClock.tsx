@@ -1,4 +1,3 @@
-
 import app from "ags/gtk4/app"
 import { Astal, Gtk, Gdk } from "ags/gtk4"
 import GLib from "gi://GLib"
@@ -38,6 +37,20 @@ export default function AnalogClock(monitor: Gdk.Monitor) {
     cr.setLineWidth(1)
     cr.arc(centerX, centerY, radius, 0, 2 * Math.PI)
     cr.stroke()
+
+    // ---------- ВИНЬЕТКА: узкая полоска по краю, плавный градиент ----------
+    const vignetteSteps = 36
+    const vignetteWidth = radius * 0.060
+    for (let i = 0; i < vignetteSteps; i++) {
+      const t = i / (vignetteSteps - 1)
+      const r = radius - t * vignetteWidth
+      const smooth = (1 - t) * (1 - t)
+      const alpha = 0.08 * smooth
+      cr.setSourceRGBA(0, 0, 0, alpha)
+      cr.setLineWidth(1.5)
+      cr.arc(centerX, centerY, r, 0, 2 * Math.PI)
+      cr.stroke()
+    }
 
     // ---------- ЧАСОВЫЕ ДЕЛЕНИЯ ----------
     for (let i = 0; i < 60; i++) {

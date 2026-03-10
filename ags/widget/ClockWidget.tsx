@@ -17,14 +17,11 @@ export default function ClockWidget(monitor: Gdk.Monitor) {
       gdkmonitor={monitor}
       anchor={BOTTOM | RIGHT}
       margin-right={10}
-      margin-bottom={10}
+      margin-bottom={40}
       application={app}
       focusable={false}
     >
-      <box
-        class="desktop-clock"
-        orientation={Gtk.Orientation.VERTICAL}
-      >
+      <box class="desktop-clock" orientation={Gtk.Orientation.VERTICAL} spacing={2}>
         <label class="clock-time" label={time} />
         <label class="clock-date" label={date} />
       </box>
