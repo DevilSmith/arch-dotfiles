@@ -25,7 +25,7 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
     hexpand: true,
   })
 
-  const weekdayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+  const weekdayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   for (const day of weekdayNames) {
     const lbl = new Gtk.Label({ label: day, halign: Gtk.Align.CENTER, hexpand: true })
     lbl.add_css_class("calendar-weekday")
@@ -39,7 +39,7 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
     const year = current.getFullYear()
     const month = current.getMonth()
 
-    const monthName = current.toLocaleString("default", { month: "long" })
+    const monthName = current.toLocaleString("en-US", { month: "long" })
     monthLabel.label = `${monthName} ${year}`
 
     const firstDay = new Date(year, month, 1).getDay()
