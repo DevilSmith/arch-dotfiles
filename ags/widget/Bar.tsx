@@ -109,21 +109,35 @@ function toggleAppMenu() {
 // Workspaces
 // ---------------------------------------------------------------------------
 
-function Workspaces() {
-  const hypr = AstalHyprland.get_default()
+/** Сортировка по «номеру» из name (например "4", "3:vim"), иначе по id. */
+function workspaceSortKey(ws: { name: string; id: number }): number {
+  const head = ws.name.split(":")[0] ?? ""
+  const n = parseInt(head, 10)
+  return Number.isNaN(n) ? 1e9 + ws.id : n
+}
+
+function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
+  const hypr = AstalHyprland.get_default()!
+  const connector = gdkMonitor.get_connector()
+  const hMonitor = connector ? hypr.get_monitor_by_name(connector) : null
+  // На этом мониторе — activeWorkspace; иначе глобальный фокус (один монитор / нет сопоставления имён).
+  const active = hMonitor
+    ? createBinding(hMonitor, "activeWorkspace")
+    : createBinding(hypr, "focusedWorkspace")
   const workspaces = createBinding(hypr, "workspaces")
-  const focused = createBinding(hypr, "focusedWorkspace")
-  const sorted = workspaces((arr) => [...arr].sort((a, b) => a.id - b.id))
+  const sorted = workspaces((arr) =>
+    [...arr].sort((a, b) => workspaceSortKey(a) - workspaceSortKey(b)),
+  )
 
   return (
     <box spacing={BAR_SPACING}>
       <For each={sorted}>
         {(ws) => (
           <button
-            class={focused((f) => (f?.id === ws.id ? "workspace active" : "workspace"))}
-            onClicked={() => hypr.dispatch("workspace", ws.id.toString())}
+            class={active((f) => (f?.name === ws.name ? "workspace active" : "workspace"))}
+            onClicked={() => hypr.dispatch("workspace", ws.name)}
           >
-            <label label={ws.id.toString()} />
+            <label label={ws.name} />
           </button>
         )}
       </For>
@@ -368,7 +382,7 @@ export default function Bar(monitor: Gdk.Monitor) {
         </box>
 
         <box class="island" spacing={BAR_SPACING}>
-          <Workspaces />
+          <Workspaces gdkMonitor={monitor} />
           <ActiveWindow />
         </box>
 
