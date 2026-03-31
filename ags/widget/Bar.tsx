@@ -20,7 +20,7 @@ import AstalNotifd from "gi://AstalNotifd?version=0.1"
 // Constants
 // ---------------------------------------------------------------------------
 
-const BAR_SPACING = 6
+const BAR_SPACING = 5
 const CMD = {
   launcher: "wofi --show drun",
   network: "nm-connection-editor",
@@ -116,6 +116,19 @@ function workspaceSortKey(ws: { name: string; id: number }): number {
   return Number.isNaN(n) ? 1e9 + ws.id : n
 }
 
+/** Подпись: name как в Hyprland; если пусто (часто после старта) — id. */
+function workspaceLabel(ws: { name: string; id: number }): string {
+  const n = ws.name?.trim()
+  return n ? n : String(ws.id)
+}
+
+/** Текущий стол иногда не попадает в workspaces, пока нет окон / до sync — добавляем вручную. */
+function mergeWithActive<T extends { id: number }>(list: T[], active: T | null | undefined): T[] {
+  if (!active) return [...list]
+  if (list.some((w) => w.id === active.id)) return [...list]
+  return [...list, active]
+}
+
 function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
   const hypr = AstalHyprland.get_default()!
   const connector = gdkMonitor.get_connector()
@@ -124,9 +137,23 @@ function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
   const active = hMonitor
     ? createBinding(hMonitor, "activeWorkspace")
     : createBinding(hypr, "focusedWorkspace")
-  const workspaces = createBinding(hypr, "workspaces")
-  const sorted = workspaces((arr) =>
-    [...arr].sort((a, b) => workspaceSortKey(a) - workspaceSortKey(b)),
+  // Списка из одного workspaces мало: текущий стол после старта/без окон часто не в массиве,
+  // а notify на нём не всегда совпадает с activeWorkspace. Опрос короткий — стабильный merge.
+  const connectorStr = connector ?? ""
+  const sorted = createPoll(
+    (() => {
+      const hm = connectorStr ? hypr.get_monitor_by_name(connectorStr) : null
+      const arr = hypr.get_workspaces()
+      const f = hm?.activeWorkspace ?? hypr.focusedWorkspace
+      return mergeWithActive(arr, f).sort((a, b) => workspaceSortKey(a) - workspaceSortKey(b))
+    })(),
+    200,
+    () => {
+      const hm = connectorStr ? hypr.get_monitor_by_name(connectorStr) : null
+      const arr = hypr.get_workspaces()
+      const f = hm?.activeWorkspace ?? hypr.focusedWorkspace
+      return mergeWithActive(arr, f).sort((a, b) => workspaceSortKey(a) - workspaceSortKey(b))
+    },
   )
 
   return (
@@ -134,10 +161,10 @@ function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
       <For each={sorted}>
         {(ws) => (
           <button
-            class={active((f) => (f?.name === ws.name ? "workspace active" : "workspace"))}
-            onClicked={() => hypr.dispatch("workspace", ws.name)}
+            class={active((f) => (f?.id === ws.id ? "workspace active" : "workspace"))}
+            onClicked={() => hypr.dispatch("workspace", ws.name?.trim() ? ws.name : String(ws.id))}
           >
-            <label label={ws.name} />
+            <label label={workspaceLabel(ws)} />
           </button>
         )}
       </For>
