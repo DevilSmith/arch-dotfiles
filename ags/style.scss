@@ -48,14 +48,14 @@ window.nord-bar {
 }
 
 .bar-root {
-  padding: 7px 7px 0 7px;
-  min-height: 32px;
+  padding: 5px 0 5px 5px;
+  min-width: 32px;
 }
 
 .icon-button {
   background: transparent;
   border: none;
-  padding: 3px 5px;
+  padding: 2px 3px;
 }
 
 .icon-button:hover {
@@ -73,9 +73,21 @@ window.nord-bar {
 .island {
   background-color: var(--bg-island);
   border-radius: var(--radius);
-  padding: 3px 8px;
+  padding: 3px 5px;
   color: var(--text);
   border: var(--shadow-widget-border);
+}
+
+.bar-island {
+  min-width: 34px;
+}
+
+.arch-island,
+.center-island,
+.notifications-island {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0;
 }
 
 .island button:hover,
@@ -90,9 +102,35 @@ window.nord-bar {
 }
 
 .right-island {
-  margin-left: 8px;
+  margin-top: 6px;
   border-radius: var(--radius);
   border: var(--shadow-widget-border);
+}
+
+.status-item {
+  min-width: 22px;
+}
+
+.status-button {
+  min-width: 22px;
+  min-height: 22px;
+  padding: 2px;
+}
+
+.arch-island button,
+.center-island button {
+  min-width: 22px;
+  min-height: 22px;
+  padding: 2px;
+  margin-left: 3px;
+}
+
+.status-icon,
+.status-button image,
+.center-island image,
+.right-island image,
+.arch-island image {
+  -gtk-icon-size: 16px;
 }
 
 /* Лёгкий объём: почти плоский дизайн с минимальным стеклянным акцентом */
@@ -119,9 +157,10 @@ window.nord-bar {
 
 .arch-label {
   font-family: "JetBrainsMono Nerd Font", "Nerd Font", monospace;
-  font-size: 15px;
-  line-height: 15px;
-  padding: 0 4px 0 1px;
+  font-size: 17px;
+  line-height: 17px;
+  padding: 0;
+  min-width: 1em;
 }
 
 /* ---------------------------------------------------------------------------
@@ -129,7 +168,7 @@ window.nord-bar {
    --------------------------------------------------------------------------- */
 
 .workspace {
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: var(--radius);
   background-color: transparent;
   color: var(--text);
@@ -415,6 +454,11 @@ window.nord-bar {
 .battery-profile-label {
   opacity: 0.7;
   font-size: 11px;
+}
+
+.battery-percent-label {
+  font-size: 9px;
+  opacity: 0.9;
 }
 
 .power-profiles-popover {

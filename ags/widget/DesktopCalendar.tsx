@@ -128,8 +128,8 @@ export default function DesktopCalendar(monitor: Gdk.Monitor) {
       visible
       gdkmonitor={monitor}
       anchor={TOP | LEFT}
-      margin-top={10}
-      margin-left={10}
+      margin-top={5}
+      margin-left={6}
       application={app}
       focusable={false}
     >

@@ -161,8 +161,8 @@ export default function AnalogClock(monitor: Gdk.Monitor) {
             visible
             gdkmonitor={monitor}
             anchor={TOP | RIGHT}
-            margin-top={10}
-            margin-right={10}
+            margin-top={5}
+            margin-right={6}
             application={app}
             focusable={false}
         >

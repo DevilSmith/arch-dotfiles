@@ -3,7 +3,6 @@ import { For, With, createBinding, onCleanup } from "ags"
 import { createPoll } from "ags/time"
 import { execAsync } from "ags/process"
 import GLib from "gi://GLib"
-import Pango from "gi://Pango"
 import Astal from "gi://Astal?version=4.0"
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
@@ -27,14 +26,6 @@ const CMD = {
   bluetooth: "blueman-manager",
   volume: "pavucontrol",
 } as const
-
-function formatWindowTitle(c: { appClass?: string; instance?: string; class?: string } | null): string {
-  if (!c) return ""
-  let name = c.appClass || c.instance || c.class || ""
-  if (!name) return ""
-  if (name.includes(".")) name = name.split(".").pop() ?? name
-  return name[0].toUpperCase() + name.slice(1)
-}
 
 /** Монитор под курсором (через Hyprland) или null. */
 function getMonitorUnderCursor(): Gdk.Monitor | null {
@@ -119,7 +110,9 @@ function workspaceSortKey(ws: { name: string; id: number }): number {
 /** Подпись: name как в Hyprland; если пусто (часто после старта) — id. */
 function workspaceLabel(ws: { name: string; id: number }): string {
   const n = ws.name?.trim()
-  return n ? n : String(ws.id)
+  if (!n) return String(ws.id)
+  const head = n.split(":")[0]?.trim()
+  return head || String(ws.id)
 }
 
 /** Текущий стол иногда не попадает в workspaces, пока нет окон / до sync — добавляем вручную. */
@@ -157,7 +150,7 @@ function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
   )
 
   return (
-    <box spacing={BAR_SPACING}>
+    <box orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING}>
       <For each={sorted}>
         {(ws) => (
           <button
@@ -173,26 +166,6 @@ function Workspaces({ gdkMonitor }: { gdkMonitor: Gdk.Monitor }) {
 }
 
 // ---------------------------------------------------------------------------
-// Active window
-// ---------------------------------------------------------------------------
-
-function ActiveWindow() {
-  const hypr = AstalHyprland.get_default()
-  const client = createBinding(hypr, "focusedClient")
-
-  return (
-    <label
-      class="workspace"
-      maxWidthChars={40}
-      singleLineMode
-      ellipsize={Pango.EllipsizeMode.END}
-      xalign={0}
-      label={client(formatWindowTitle)}
-    />
-  )
-}
-
-// ---------------------------------------------------------------------------
 // MPRIS
 // ---------------------------------------------------------------------------
 
@@ -204,25 +177,37 @@ function Mpris() {
   const players = createBinding(mpris, "players")
 
   return (
-    <button class="icon-button" onClicked={togglePlayerWidget}>
-      <box spacing={0}>
-        <For each={players}>
-          {(player) => (
-            <image
-              iconName={createBinding(player, "playbackStatus")((s) =>
-                s === AstalMpris.PlaybackStatus.PLAYING
-                  ? MPRIS_ICON_PAUSE
-                  : MPRIS_ICON_PLAY
-              )}
-            />
-          )}
-        </For>
-        <image
-          iconName={MPRIS_ICON_PLAY}
-          visible={players((list) => list.length === 0)}
-        />
-      </box>
-    </button>
+    <box hexpand>
+      <box hexpand />
+      <button class="icon-button status-button" onClicked={togglePlayerWidget}>
+        <With value={players}>
+          {(list) => {
+            const p = list[0]
+            if (!p) {
+              return (
+                <image
+                  class="status-icon"
+                  iconName={MPRIS_ICON_PLAY}
+                  halign={Gtk.Align.CENTER}
+                  valign={Gtk.Align.CENTER}
+                />
+              )
+            }
+            return (
+              <image
+                class="status-icon"
+                iconName={createBinding(p, "playbackStatus")((s) =>
+                  s === AstalMpris.PlaybackStatus.PLAYING ? MPRIS_ICON_PAUSE : MPRIS_ICON_PLAY
+                )}
+                halign={Gtk.Align.CENTER}
+                valign={Gtk.Align.CENTER}
+              />
+            )
+          }}
+        </With>
+      </button>
+      <box hexpand />
+    </box>
   )
 }
 
@@ -235,11 +220,11 @@ function Tray() {
   const items = createBinding(tray, "items")
 
   return (
-    <box>
+    <box class="tray-box" orientation={Gtk.Orientation.VERTICAL} spacing={2}>
       <For each={items}>
         {(item) => (
-          <menubutton>
-            <image gicon={createBinding(item, "gicon")} />
+          <menubutton class="tray-item" hasFrame={false} canFocus={false}>
+            <image class="tray-icon" gicon={createBinding(item, "gicon")} />
           </menubutton>
         )}
       </For>
@@ -256,18 +241,26 @@ function Wireless() {
   const wifi = createBinding(network, "wifi")
 
   return (
-    <box visible={wifi(Boolean)}>
+    <box class="status-item" visible={wifi(Boolean)} hexpand>
       <With value={wifi}>
         {(w) =>
           w && (
-            <button class="icon-button" onClicked={() => execAsync(CMD.network).catch(() => {})}>
-              <box spacing={BAR_SPACING}>
-                <image iconName="network-wireless-signal-excellent-symbolic" />
-                <label
-                  label={wifi((ap: any) => ap?.get_ssid?.() ?? ap?.ssid ?? "")}
+            <box hexpand>
+              <box hexpand />
+              <button
+                class="icon-button status-button"
+                tooltipText={createBinding(w, "ssid")}
+                onClicked={() => execAsync(CMD.network).catch(() => {})}
+              >
+                <image
+                  class="status-icon"
+                  iconName="network-wireless-signal-excellent-symbolic"
+                  halign={Gtk.Align.CENTER}
+                  valign={Gtk.Align.CENTER}
                 />
-              </box>
-            </button>
+              </button>
+              <box hexpand />
+            </box>
           )
         }
       </With>
@@ -281,7 +274,11 @@ function Wireless() {
 
 function BluetoothButton() {
   return (
-    <button class="icon-button" onClicked={() => execAsync(CMD.bluetooth).catch(() => {})}>
+    <button
+      class="icon-button status-button"
+      halign={Gtk.Align.CENTER}
+      onClicked={() => execAsync(CMD.bluetooth).catch(() => {})}
+    >
       <image iconName="bluetooth-symbolic" />
     </button>
   )
@@ -295,12 +292,23 @@ function NotificationsButton() {
   const notifd = AstalNotifd.get_default()
   const hasNotifications = createBinding(notifd, "notifications")((list) => list.length > 0)
   return (
-    <button
-      class={hasNotifications((h) => (h ? "icon-button has-notifications" : "icon-button"))}
-      onClicked={toggleNotificationsWidget}
-    >
-      <image iconName="preferences-system-notifications-symbolic" />
-    </button>
+    <box hexpand>
+      <box hexpand />
+      <button
+        class={hasNotifications((h) =>
+          h ? "icon-button status-button has-notifications" : "icon-button status-button"
+        )}
+        onClicked={toggleNotificationsWidget}
+      >
+        <image
+          class="status-icon"
+          iconName="preferences-system-notifications-symbolic"
+          halign={Gtk.Align.CENTER}
+          valign={Gtk.Align.CENTER}
+        />
+      </button>
+      <box hexpand />
+    </box>
   )
 }
 
@@ -311,7 +319,11 @@ function NotificationsButton() {
 function AudioOutput() {
   const { defaultSpeaker: speaker } = AstalWp.get_default()!
   return (
-    <button class="icon-button" onClicked={() => execAsync(CMD.volume).catch(() => {})}>
+    <button
+      class="icon-button status-button"
+      halign={Gtk.Align.CENTER}
+      onClicked={() => execAsync(CMD.volume).catch(() => {})}
+    >
       <image iconName={createBinding(speaker, "volumeIcon")} />
     </button>
   )
@@ -329,15 +341,16 @@ function Battery() {
   const profiles = createBinding(power, "profiles")
 
   return (
-    <menubutton hasFrame={false} canFocus={false}>
+    <menubutton class="status-item" hasFrame={false} canFocus={false} halign={Gtk.Align.CENTER}>
       <box
-        class="battery-button"
+        class="battery-button status-button"
+        orientation={Gtk.Orientation.VERTICAL}
         spacing={BAR_SPACING}
         visible={createBinding(battery, "isPresent")}
+        halign={Gtk.Align.CENTER}
       >
         <image iconName={createBinding(battery, "iconName")} />
-        <label label={percent} />
-        <label class="battery-profile-label" label={activeProfile((p) => p?.profile ?? "")} />
+        <label class="battery-percent-label" label={percent} xalign={0.5} yalign={0.5} />
       </box>
       <popover>
         <box
@@ -372,10 +385,10 @@ function Battery() {
 // ---------------------------------------------------------------------------
 
 function Clock() {
-  const time = createPoll("", 1000, () => GLib.DateTime.new_now_local().format("%H:%M")!)
+  const time = createPoll("", 1000, () => GLib.DateTime.new_now_local().format("%H\n%M")!)
   return (
-    <button class="icon-button">
-      <label label={time} />
+    <button class="icon-button status-button" halign={Gtk.Align.CENTER}>
+      <label label={time} xalign={0.5} yalign={0.5} justify={Gtk.Justification.CENTER} />
     </button>
   )
 }
@@ -386,7 +399,7 @@ function Clock() {
 
 export default function Bar(monitor: Gdk.Monitor) {
   let win: Astal.Window
-  const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+  const { TOP, LEFT, BOTTOM } = Astal.WindowAnchor
 
   onCleanup(() => win.destroy())
 
@@ -398,26 +411,33 @@ export default function Bar(monitor: Gdk.Monitor) {
       namespace="nord-bar"
       gdkmonitor={monitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
-      anchor={TOP | LEFT | RIGHT}
+      anchor={TOP | LEFT | BOTTOM}
       application={app}
     >
-      <box class="bar-root" orientation={Gtk.Orientation.HORIZONTAL} spacing={BAR_SPACING} hexpand>
-        <box class="island arch-island">
-          <button class="icon-button" onClicked={toggleAppMenu}>
-            <label class="arch-label" label="" xalign={0.5} yalign={0.5} />
+      <box class="bar-root" orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING} vexpand>
+        <box class="island bar-island arch-island">
+          <box hexpand />
+          <button class="icon-button status-button" onClicked={toggleAppMenu}>
+            <label class="arch-label" label=" " xalign={0.5} yalign={0.5} widthChars={1} />
           </button>
+          <box hexpand />
         </box>
 
-        <box class="island" spacing={BAR_SPACING}>
+        <box class="island bar-island" orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING}>
           <Workspaces gdkMonitor={monitor} />
-          <ActiveWindow />
         </box>
 
-        <box class="island center-island" spacing={BAR_SPACING}>
+        <box class="island bar-island center-island" spacing={BAR_SPACING}>
           <Mpris />
         </box>
 
-        <box class="island right-island" spacing={BAR_SPACING} hexpand halign={Gtk.Align.END}>
+        <box
+          class="island bar-island right-island"
+          orientation={Gtk.Orientation.VERTICAL}
+          spacing={BAR_SPACING}
+          vexpand
+          valign={Gtk.Align.END}
+        >
           <Wireless />
           <BluetoothButton />
           <AudioOutput />
@@ -425,7 +445,7 @@ export default function Bar(monitor: Gdk.Monitor) {
           <Clock />
         </box>
 
-        <box class="island" spacing={BAR_SPACING}>
+        <box class="island bar-island notifications-island" spacing={BAR_SPACING}>
           <NotificationsButton />
         </box>
       </box>
