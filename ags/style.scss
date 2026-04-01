@@ -49,7 +49,7 @@ window.nord-bar {
 
 .bar-root {
   padding: 5px 0 5px 5px;
-  min-width: 32px;
+  min-width: 20px;
 }
 
 .icon-button {
@@ -79,13 +79,13 @@ window.nord-bar {
 }
 
 .bar-island {
-  min-width: 34px;
+  min-width: 20px;
 }
 
 .arch-island,
 .center-island,
 .notifications-island {
-  min-width: 34px;
+  min-width: 20px;
   min-height: 34px;
   padding: 0;
 }
@@ -108,11 +108,11 @@ window.nord-bar {
 }
 
 .status-item {
-  min-width: 22px;
+  min-width: 10px;
 }
 
 .status-button {
-  min-width: 22px;
+  min-width: 10px;
   min-height: 22px;
   padding: 2px;
 }
