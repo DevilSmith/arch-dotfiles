@@ -49,7 +49,7 @@ window.nord-bar {
 
 .bar-root {
   padding: 5px 0 5px 5px;
-  min-width: 20px;
+  min-width: 5px;
 }
 
 .icon-button {
@@ -73,19 +73,19 @@ window.nord-bar {
 .island {
   background-color: var(--bg-island);
   border-radius: var(--radius);
-  padding: 3px 5px;
+  padding: 3px 3px;
   color: var(--text);
   border: var(--shadow-widget-border);
 }
 
 .bar-island {
-  min-width: 20px;
+  min-width: 2px;
 }
 
 .arch-island,
 .center-island,
 .notifications-island {
-  min-width: 20px;
+  min-width: 2px;
   min-height: 34px;
   padding: 0;
 }
@@ -108,11 +108,11 @@ window.nord-bar {
 }
 
 .status-item {
-  min-width: 10px;
+  min-width: 2px;
 }
 
 .status-button {
-  min-width: 10px;
+  min-width: 2px;
   min-height: 22px;
   padding: 2px;
 }
