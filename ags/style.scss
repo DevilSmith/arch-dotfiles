@@ -9,6 +9,8 @@
 :root {
   --bg-panel: rgba(46, 52, 64, 0.85);
   --bg-island: rgba(30, 30, 35, 0.92);
+  /* Подложка бара (окно); размытие — в композиторе, напр. Hyprland: layerrule = blur, nord-bar */
+  --bg-bar: rgba(0, 0, 0, 0.58);
   --accent: #88c0d0;
   --text: #ffffff;
   --radius: 12px; /* единое скругление для бара и виджетов */
@@ -44,7 +46,7 @@ button {
 
 /* Bar window: namespace="nord-bar" → widget name is .nord-bar */
 window.nord-bar {
-  background-color: var(--bg-panel);
+  background-color: var(--bg-bar);
 }
 
 .bar-root {
@@ -78,6 +80,14 @@ window.nord-bar {
   border: var(--shadow-widget-border);
 }
 
+/* Один общий остров бара; внутренние блоки без своего фона */
+.bar-unified > .bar-island {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  background-image: none;
+}
+
 .bar-island {
   min-width: 2px;
 }
@@ -93,18 +103,6 @@ window.nord-bar {
 .island button:hover,
 .island menubutton:hover {
   background-color: rgba(255, 255, 255, 0.1);
-}
-
-.center-island {
-  background-color: var(--bg-island);
-  border-radius: var(--radius);
-  border: var(--shadow-widget-border);
-}
-
-.right-island {
-  margin-top: 6px;
-  border-radius: var(--radius);
-  border: var(--shadow-widget-border);
 }
 
 .status-item {
@@ -134,9 +132,7 @@ window.nord-bar {
 }
 
 /* Лёгкий объём: почти плоский дизайн с минимальным стеклянным акцентом */
-.island,
-.center-island,
-.right-island,
+.island.bar-unified,
 .analog-clock,
 .desktop-clock,
 .desktop-calendar,

@@ -415,38 +415,45 @@ export default function Bar(monitor: Gdk.Monitor) {
       application={app}
     >
       <box class="bar-root" orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING} vexpand>
-        <box class="island bar-island arch-island">
-          <box hexpand />
-          <button class="icon-button status-button" onClicked={toggleAppMenu}>
-            <label class="arch-label" label=" " xalign={0.5} yalign={0.5} widthChars={1} />
-          </button>
-          <box hexpand />
-        </box>
-
-        <box class="island bar-island" orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING}>
-          <Workspaces gdkMonitor={monitor} />
-        </box>
-
-        <box class="island bar-island center-island" spacing={BAR_SPACING}>
-          <Mpris />
-        </box>
-
         <box
-          class="island bar-island right-island"
+          class="island bar-unified"
           orientation={Gtk.Orientation.VERTICAL}
           spacing={BAR_SPACING}
           vexpand
-          valign={Gtk.Align.END}
         >
-          <Wireless />
-          <BluetoothButton />
-          <AudioOutput />
-          <Battery />
-          <Clock />
-        </box>
+          <box class="bar-island arch-island">
+            <box hexpand />
+            <button class="icon-button status-button" onClicked={toggleAppMenu}>
+              <label class="arch-label" label=" " xalign={0.5} yalign={0.5} widthChars={1} />
+            </button>
+            <box hexpand />
+          </box>
 
-        <box class="island bar-island notifications-island" spacing={BAR_SPACING}>
-          <NotificationsButton />
+          <box class="bar-island" orientation={Gtk.Orientation.VERTICAL} spacing={BAR_SPACING}>
+            <Workspaces gdkMonitor={monitor} />
+          </box>
+
+          <box class="bar-island center-island" spacing={BAR_SPACING}>
+            <Mpris />
+          </box>
+
+          <box
+            class="bar-island right-island"
+            orientation={Gtk.Orientation.VERTICAL}
+            spacing={BAR_SPACING}
+            vexpand
+            valign={Gtk.Align.END}
+          >
+            <Wireless />
+            <BluetoothButton />
+            <AudioOutput />
+            <Battery />
+            <Clock />
+          </box>
+
+          <box class="bar-island notifications-island" spacing={BAR_SPACING}>
+            <NotificationsButton />
+          </box>
         </box>
       </box>
     </window>
